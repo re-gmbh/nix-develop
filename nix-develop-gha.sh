@@ -60,7 +60,7 @@ while IFS='=' read -r -d '' n v || exit "$n"; do
 	# Ref https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
 	# Use a random string as a heredoc delimiter for multi-line strings
 	if (("$(wc -l <<<"$v")" > 1)); then
-		delimiter=$(nix-shell -p run openssl -- rand -base64 18)
+		delimiter=$(nix-shell run nixpkgs#openssl -- rand -base64 18)
 		if contains "$delimiter" "$v"; then
 			echo "Environment variable $n contains randomly generated string $delimiter, file an issue and buy a lottery ticket."
 			exit 1
